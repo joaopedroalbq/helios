@@ -93,11 +93,12 @@ export default canvas => {
     camera.updateProjectionMatrix()
     camera.position.z = 50
     renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.BasicShadowMap
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
     renderer.shadowMapSoft = true
     renderer.setSize(width, height)
   }
 
+  
   const scene = buildScene()
   const renderer = buildRenderer(screenDimensions)
   const camera = buildCamera(screenDimensions)
@@ -109,7 +110,8 @@ export default canvas => {
   const observables = createObservables()
   const sceneSubjects = createSceneSubjects(scene, observables)
   
-  const House = GLTFLoader(scene, './src/threejs/models/House.gltf')
+  GLTFLoader(scene, './src/threejs/models/House.gltf', .05, 0, 1.5, 0)
+  GLTFLoader(scene, './src/threejs/models/Tree.gltf', 10, 70, 0, 30)
 
   return {
     update,

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 window.THREE = THREE
 require('three/examples/js/loaders/GLTFLoader')
 
-export default (scene, resource) => {
+export default (scene, resource, scale, x=0, y=0, z=0) => {
     // Instantiate a loader
     let loader = new THREE.GLTFLoader();
     // Load a glTF resource
@@ -14,17 +14,17 @@ export default (scene, resource) => {
 
         let model = gltf.scene
 
-        model.scale.set(.05,.05,.05)
-        model.position.set(0,1.5,0)
+        model.scale.set(scale,scale,scale)
+        model.position.set(x, y, z)
         
         gltf.scene.traverse( function( node ) {
 
-          if ( node instanceof THREE.Mesh ) { node.castShadow = true; }
+          if ( node instanceof THREE.Mesh ) { node.castShadow = true; node.receiveShadow = true; }
 
         } );
 
         scene.add(model)
-
+        return model
       },
       // called while loading is progressing
       function ( xhr ) {
